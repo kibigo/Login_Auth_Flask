@@ -3,6 +3,9 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
 from flask_migrate import Migrate
 from models import db
+from models import LoginForm, RegisterForm
+
+
 
 app = Flask(__name__)
 
@@ -18,13 +21,19 @@ db.init_app(app)
 def home ():
     return render_template('home.html')
 
-@app.route('/login')
+@app.route('/login', methods = ['GET', 'POST'])
 def login ():
-    return render_template('login.html')
 
-@app.route('/register')
+    form = LoginForm()
+
+    return render_template('login.html', form = form)
+
+@app.route('/register', methods = ['GET', 'POST'])
 def register():
-    return render_template('register.html')
+
+    form = RegisterForm()
+
+    return render_template('register.html', form = form)
 
 if __name__ == '__main__':
     app.run(debug=True)
